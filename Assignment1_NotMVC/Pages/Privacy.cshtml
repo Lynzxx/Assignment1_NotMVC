@@ -1,0 +1,32 @@
+﻿@page
+@using Assignment1_NotMVC.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+
+@model PrivacyModel
+@{
+    ViewData["Title"] = "User Details";
+}
+<h1>@ViewData["Title"]</h1>
+@{
+    if (SignInManager.IsSignedIn(User))
+    {
+        <p>Email: @Model.currentUser.Email</p>
+        <p>About Me: @Model.aboutMe</p>
+        <p>Delivery Address: @Model.deliveryAddr</p>
+        <p>Full Name: @Model.name</p>
+        <p>Password Hash: @Model.currentUser.PasswordHash</p>
+        <p>Gender: @Model.currentUser.Gender</p>
+        <p>Mobile Number: @Model.currentUser.PhoneNumber</p>
+        <p>Credit card no: @Model.creditCardNum</p>
+        
+        <img id="imgPreview" style="height:600px;width:600px;object-fit:cover"
+                     src="@(string.IsNullOrEmpty(Model.currentUser.Photo) ? "/images/user.png" : Model.currentUser.Photo)"
+                     onerror="this.src='/images/user.png'" />
+                <input class="form-control d-none" asp-for="@Model.currentUser.Photo" />
+
+
+        <a type="button" class="btn btn-primary" asp-page="/ChangePassword">Change Password</a>
+    }
+}
+    

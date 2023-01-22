@@ -1,0 +1,181 @@
+﻿@page
+@model Assignment1_NotMVC.Pages.RegisterModel
+@{
+}
+
+            <h1 class="mb-3">Register </h1>
+
+            <form method="post" asp-antiforgery="true" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="RModel.Email">Email Address</label>
+                            <input type="Text" asp-for="RModel.Email" class="form-control" />
+                            <span asp-validation-for="RModel.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="RModel.Name">Name</label>
+                            <input type="Text" asp-for="RModel.Name" class="form-control" />
+                            <span asp-validation-for="RModel.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="RModel.Password">Password</label>
+                            <input id="pwd1" type="Password" asp-for="RModel.Password" class="form-control" onkeyup="validate()" />
+                            <span id="pwd1err" asp-validation-for="RModel.Password"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="RModel.ConfirmPassword">Confirm Password</label>
+                            <input id="pwd2" onkeyup="validate2()" type="Password" asp-for="RModel.ConfirmPassword" class="form-control" />
+                            <span id="pwd2err" asp-validation-for="RModel.ConfirmPassword"></span>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" asp-for="RModel.Gender"></label>
+                            <div class="col-sm-10 d-flex align-items-center">
+                                <div class="form-check form-check-inline">
+                                    @Html.RadioButtonFor(m => m.RModel.Gender, "M",
+                                    new {@class = "form-check-input",@checked = "checked"})
+                                    <label class="form-check-label">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    @Html.RadioButtonFor(m => m.RModel.Gender, "F",
+                                    new {@class = "form-check-input"})
+                                    <label class="form-check-label">Female</label>
+                                </div>
+                                <span asp-validation-for="RModel.Gender" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="RModel.MobileNo">Phone Number</label>
+                            <input type="Text" asp-for="RModel.MobileNo" class="form-control" />
+                            <span asp-validation-for="RModel.MobileNo" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="RModel.CreditCardNo">Credit Card Number</label>
+                            <input type="Text" asp-for="RModel.CreditCardNo" class="form-control" />
+                            <span asp-validation-for="RModel.CreditCardNo" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="RModel.DeliveryAddr">Delivery Address</label>
+                            <input type="Text" asp-for="RModel.DeliveryAddr" class="form-control" />
+                            <span asp-validation-for="RModel.DeliveryAddr" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="RModel.AboutMe">About Me</label>
+                            <input type="Text" asp-for="RModel.AboutMe" class="form-control" />
+                            <span asp-validation-for="RModel.AboutMe" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <input type="file" accept="image/*" asp-for="Upload"
+                                   class="form-control" onchange="showImgPreview(this)" />
+                            <span asp-validation-for="Upload" class="text-danger"></span>
+                        </div>
+                        <img id="imgPreview" class="rounded-circle"
+                             style="height:300px;width:300px;object-fit:cover"
+                             src="/uploads/user.png" />
+                    </div>
+                </div>
+
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+
+
+
+<script type="text/javascript">
+        function validate(){
+            var pwd1=document.getElementById("pwd1").value;
+            if(pwd1.length<12){
+                document.getElementById("pwd1err").innerHTML="Password length must be at least 12 characters.";
+                document.getElementById("pwd1err").style.color="Red";
+                return("too_short");
+            }
+            else if(pwd1.search(/[0-9]/)== -1){
+                document.getElementById("pwd1err").innerHTML="Requires at least 1 number.";
+                document.getElementById("pwd1err").style.color="Red";
+                return("no_number");
+            }
+            else if(pwd1.search(/[a-z]/)== -1){
+                document.getElementById("pwd1err").innerHTML="Requires at least 1 lowercase letter.";
+                document.getElementById("pwd1err").style.color="Red";
+                return("no_lowercase");
+            }
+            else if(pwd1.search(/[A-Z]/)== -1){
+                document.getElementById("pwd1err").innerHTML="Requires at least 1 uppercase letter.";
+                document.getElementById("pwd1err").style.color="Red";
+                return("no_uppercase");
+            }
+            else if(pwd1.search(/[\W\D_]/)== -1){
+                document.getElementById("pwd1err").innerHTML="Requires at least 1 special character.";
+                document.getElementById("pwd1err").style.color="Red";
+                return("no_specialchar");
+            }
+
+            document.getElementById("pwd1err").innerHTML="Excellent!";
+            document.getElementById("pwd1err").style.color="Blue";
+        }
+
+        function validate2(){
+            var pwd1=document.getElementById("pwd1").value;
+            var pwd2=document.getElementById("pwd2").value;
+            if(pwd2.length<12){
+                document.getElementById("pwd2err").innerHTML="Password length must be at least 12 characters.";
+                document.getElementById("pwd2err").style.color="Red";
+                return("too_short");
+            }
+            else if(pwd2.search(/[0-9]/)== -1){
+                document.getElementById("pwd2err").innerHTML="Requires at least 1 number.";
+                document.getElementById("pwd2err").style.color="Red";
+                return("no_number");
+            }
+            else if(pwd2.search(/[a-z]/)== -1){
+                document.getElementById("pwd1err").innerHTML="Requires at least 1 lowercase letter.";
+                document.getElementById("pwd1err").style.color="Red";
+                return("no_lowercase");
+            }
+            else if(pwd2.search(/[A-Z]/)== -1){
+                document.getElementById("pwd2err").innerHTML="Requires at least 1 uppercase letter.";
+                document.getElementById("pwd2err").style.color="Red";
+                return("no_uppercase");
+            }
+            else if(pwd2.search(/[\W\D_]/)== -1){
+                document.getElementById("pwd2err").innerHTML="Requires at least 1 special character.";
+                document.getElementById("pwd2err").style.color="Red";
+                return("no_specialchar");
+            }
+            else if(pwd2!=pwd1){
+                document.getElementById("pwd2err").innerHTML="Passwords don't match.";
+                document.getElementById("pwd2err").style.color="Red";
+                return("no_match");
+            }
+            document.getElementById("pwd2err").innerHTML="Excellent!";
+            document.getElementById("pwd2err").style.color="Blue";
+        }
+
+        function showImgPreview(input) {
+            if (input.files[0]) {
+            var uploadimg = new FileReader();
+            uploadimg.onload = function(displayimg) {
+            $("#imgPreview").attr('src', displayimg.target.result);
+            }
+            uploadimg.readAsDataURL(input.files[0]);
+            }
+    }
+</script>
+@section Scripts {
+@{
+await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

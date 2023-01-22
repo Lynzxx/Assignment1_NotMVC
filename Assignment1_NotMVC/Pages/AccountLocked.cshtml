@@ -1,0 +1,7 @@
+﻿@page
+@model Assignment1_NotMVC.Pages.AccountLockedModel
+@{
+}
+
+<h3 class="text-danger">Your account has been locked, please try again after some time or you may</h3>
+<h3><a asp-page="/ResetPassword" asp-route-email="@Model.Email">reset your password here</a></h3>
